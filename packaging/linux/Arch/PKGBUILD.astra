@@ -117,7 +117,9 @@ fi
 
 prepare() {
     cd "$pkgname"
-    git submodule update --recursive --init --depth 1
+    # Full submodule history is required: nested build-deps submodules can
+    # point at commits that are not reachable from a shallow branch tip.
+    git submodule update --recursive --init
 }
 
 build() {

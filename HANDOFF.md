@@ -154,6 +154,18 @@ Perkiraan patch inti: ±15–25 file, hampir semua teks/aset.
     secara operasional. Config/state produksi tetap utuh dan nama paket tetap
     `sunshine`, jadi pemasangan balik paket lama secara teori tetap mungkin;
     tinjau ulang keputusan ini sebelum publish.
+  - **Paket Arch (2026-10-20):** `makepkg --nocheck` berhasil membuat
+    `sunshine-2026.914.233613.astra1-1-x86_64.pkg.tar.zst` (10 MB,
+    SHA-256 `1d01ddaa92e306d9573aab7acd1ce970271dfa2f1e642d6bd90500714c5548c2`).
+    Paket **tidak dipasang**. `prepare()` di `PKGBUILD.astra` diubah dari
+    shallow (`--depth 1`) menjadi full submodule fetch karena nested
+    `build-deps` (AMF, doxygen-awesome-css) menunjuk commit yang tidak
+    terjangkau dari shallow branch tip. Validasi `desktop-file-validate` dan
+    `appstream-util validate-relax` lolos; `ldd` tidak menemukan library
+    hilang; binary hasil paket melaporkan versi, publisher, dan URL fork yang
+    benar. `makepkg` memberi warning referensi `$srcdir` di binary (path header
+    Boost) dan `sunshine-esm-stats.json`; tidak fatal. Metadata masih memakai
+    `packager = Unknown Packager` karena `PACKAGER` tidak diset saat build.
 
 ## Kriteria tes (disetujui pemilik 2026-10-20)
 
