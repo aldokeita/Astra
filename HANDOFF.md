@@ -117,7 +117,7 @@ Perkiraan patch inti: ±15–25 file, hampir semua teks/aset.
     locale (config.cpp ↔ General.vue ↔ file JSON) dicek ulang dan cocok.
   - ⚠️ **Catatan locale:** `id.json` belum 100% (353 kunci teknis masih
     Inggris lewat fallback). Lanjutkan saat menyentuh tab konfigurasi terkait.
-- **Fase 3 — Build & tes otomatis: SELESAI (2026-10-20); validasi manual tersisa**
+- **Fase 3 — Build, tes & validasi manual: SELESAI (2026-10-20), kecuali rollback paket**
   - Build native `cmake-build-astra` dengan CMake 4.4.4 + GCC 16.2.1,
     `BUILD_TESTS=ON`, `BUILD_WERROR=ON`, CUDA OFF: **berhasil** (binary
     `sunshine` + `tests/test_sunshine`).
@@ -135,9 +135,23 @@ Perkiraan patch inti: ±15–25 file, hampir semua teks/aset.
     terbaca identik; hash `sunshine_state.json` tidak berubah. Kedua instance
     produksi (`sunshine-xiaomi` port 48089, `sunshine-vdd` port 48119) tidak
     di-restart dan state aslinya tidak disentuh.
-  - **Belum diverifikasi (butuh pemilik/SoLunar):** kriteria 1, 2, 5, 6, 7 di
-    bawah. Terutama pairing baru harus diuji di instance uji terpisah dan
-    rollback paket `sunshine` lama harus dicoba tanpa menghapus config/state.
+  - **Uji pairing + streaming (2026-10-20):** instance uji terpisah
+    `astra-pairing-test` (port 47989/47990, state baru, hostname UTS sendiri).
+    SoLunar-Pixel berhasil pairing, tersimpan sebagai `named_devices`, lalu
+    `CLIENT CONNECTED` dan stream `Desktop` berjalan di DP-2 (LG). Web UI
+    diakses lewat IP LAN, jadi `csrf_allowed_origins` instance uji diisi
+    origin LAN/Tailscale; tanpa itu PIN ditolak proteksi CSRF.
+  - **Dua monitor:** instance uji menangkap DP-2 (LG), sedangkan instance
+    produksi `sunshine-xiaomi` menangkap HDMI-A-1 (Xiaomi). Pemilik
+    mengonfirmasi stream, ganti monitor, Network Test, dan Details berjalan.
+  - **Produksi tetap sehat:** `sunshine-xiaomi.service` dan
+    `sunshine-vdd.service` aktif, `sunshine-watchdog.timer` aktif; state
+    produksi utuh (2 dan 1 pairing lama). Instance uji sudah dimatikan dan
+    state sementaranya dihapus.
+  - **Sisa satu:** kriteria 7 (rollback paket) belum dieksekusi karena binary
+    produksi belum diganti. Build baru hanya dijalankan dari `cmake-build-astra`;
+    uji rollback perlu memasang paket `PKGBUILD.astra`, lalu memasang balik
+    paket `sunshine` lama dan memastikan config/state/pairing tetap ada.
 
 ## Kriteria tes (disetujui pemilik 2026-10-20)
 
