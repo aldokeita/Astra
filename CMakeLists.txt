@@ -6,8 +6,12 @@ cmake_minimum_required(VERSION 3.24)
 # todo - set this conditionally
 
 project(Sunshine VERSION 0.0.0
-        DESCRIPTION "Self-hosted game stream host for Moonlight"
-        HOMEPAGE_URL "https://app.lizardbyte.dev/Sunshine")
+        DESCRIPTION "Astra game stream host for Moonlight"
+        HOMEPAGE_URL "https://github.com/aldokeita/Astra")
+
+# Product name shown to users. PROJECT_NAME stays "Sunshine" so paths, services,
+# and config compatibility with existing installs are preserved.
+set(PROJECT_DISPLAY_NAME "Astra")
 
 # Minimum separately installed Virtual HID Driver version supported by this build.
 set(LIBVIRTUALHID_MINIMUM_VERSION "2026.914.1218.10")
@@ -24,12 +28,13 @@ set(PROJECT_LICENSE "GPL-3.0-only")
 
 set(PROJECT_FQDN "dev.lizardbyte.app.Sunshine")
 
-set(PROJECT_BRIEF_DESCRIPTION "GameStream host for Moonlight")  # must be <= 35 characters
+set(PROJECT_BRIEF_DESCRIPTION "Astra game stream host")  # must be <= 35 characters
 
-set(PROJECT_LONG_DESCRIPTION "Offering low latency, cloud gaming server capabilities with support for AMD, Intel, \
-and Nvidia GPUs for hardware encoding. Software encoding is also available. You can connect to Sunshine from any \
-Moonlight client on a variety of devices. A web UI is provided to allow configuration, and client pairing, from \
-your favorite web browser. Pair from the local server or any mobile device.")
+set(PROJECT_LONG_DESCRIPTION "Astra is a self-hosted game stream host for Moonlight, built for the SoLunar client. \
+Offering low latency, cloud gaming server capabilities with support for AMD, Intel, and Nvidia GPUs for hardware \
+encoding. Software encoding is also available. You can connect to Astra from any Moonlight client on a variety of \
+devices. A web UI is provided to allow configuration, and client pairing, from your favorite web browser. Pair from \
+the local server or any mobile device.")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     message(STATUS "Setting build type to 'Release' as none was specified.")

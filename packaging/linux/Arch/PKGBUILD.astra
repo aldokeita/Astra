@@ -1,0 +1,202 @@
+# Maintainer: Aldo Keita <aldokeita@users.noreply.github.com>
+# Astra fork of Sunshine. Builds from the `astra` branch of aldokeita/Astra.
+# The package and binary stay named `sunshine` so existing configs, pairings,
+# services, and udev rules keep working. Roll back by reinstalling the repo package.
+# Reference: https://wiki.archlinux.org/title/PKGBUILD
+
+## options
+: "${_run_unit_tests:=false}"  # if set to true; unit tests will be executed post build
+: "${_support_headless_testing:=false}"
+: "${_use_cuda:=detect}" # nvenc
+
+pkgname='sunshine'
+pkgver=2026.914.233613.astra1
+pkgrel=1
+pkgdesc="Astra game stream host for Moonlight (fork)"
+arch=('x86_64' 'aarch64')
+url='https://github.com/aldokeita/Astra'
+license=('GPL-3.0-only')
+install=sunshine.install
+
+_gcc_version=15
+_versioned_gcc=false  # set to true if we need a versioned gcc, e.g. gcc14
+
+_gcc_dep_suffix=""
+_gcc_env_suffix=""
+if [ "${_versioned_gcc}" == true ]; then
+  _gcc_dep_suffix="${_gcc_version}"
+  _gcc_env_suffix="-${_gcc_version}"
+fi
+
+depends=(
+  'avahi'
+  'curl'
+  'gcc-libs'
+  'gtk3'
+  'hicolor-icon-theme'
+  'libayatana-appindicator'
+  'libcap'
+  'libdrm'
+  'libevdev'
+  'libmfx'
+  'libpipewire'
+  'libpulse'
+  'libva'
+  'libx11'
+  'libxcb'
+  'libxfixes'
+  'libxrandr'
+  'libxtst'
+  'miniupnpc'
+  'numactl'
+  'openssl'
+  'opus'
+  'qt6-base'
+  'qt6-svg'
+  'udev'
+  'vulkan-icd-loader'
+  'which'
+)
+
+makedepends=(
+  'appstream'
+  'appstream-glib'
+  'cmake'
+  'desktop-file-utils'
+  "gcc${_gcc_dep_suffix}"
+  'git'
+  'make'
+  'nodejs'
+  'npm'
+  'python-jinja'
+  'shaderc'
+)
+
+checkdepends=(
+  'gcovr'
+  'imagemagick'
+)
+
+optdepends=(
+  'libva-mesa-driver: AMD GPU encoding support'
+)
+
+provides=()
+conflicts=()
+
+source=("$pkgname::git+https://github.com/aldokeita/Astra.git#branch=astra")
+sha256sums=('SKIP')
+
+if [[ "${_use_cuda::1}" == "d" ]] && pacman -Qi cuda &> /dev/null; then
+  _use_cuda=true
+fi
+
+if [[ "${_use_cuda::1}" == "t" ]]; then
+  optdepends+=(
+    'cuda: Nvidia GPU encoding support'
+  )
+fi
+
+if [[ "${_support_headless_testing::1}" == "t" ]]; then
+  optdepends+=(
+    'xorg-server-xvfb: Virtual X server for headless testing'
+  )
+fi
+
+if [ -n "${makedepends+x}" ]; then
+  mapfile -t tmp_array < <(printf '%s\n' "${makedepends[@]}" | sort)
+  makedepends=("${tmp_array[@]}")
+  unset tmp_array
+fi
+
+if [ -n "${optdepends+x}" ]; then
+  mapfile -t tmp_array < <(printf '%s\n' "${optdepends[@]}" | sort)
+  optdepends=("${tmp_array[@]}")
+  unset tmp_array
+fi
+
+prepare() {
+    cd "$pkgname"
+    git submodule update --recursive --init --depth 1
+}
+
+build() {
+    export BRANCH="astra"
+    # Keep the application version numeric and aligned with the upstream release tag
+    # that this fork is based on, so version checks and package metadata stay sane.
+    export BUILD_VERSION="${pkgver%%.astra*}"
+    export COMMIT="$(git rev-parse HEAD)"
+
+    export CC="gcc${_gcc_env_suffix}"
+    export CXX="g++${_gcc_env_suffix}"
+
+    export CFLAGS="${CFLAGS/-Werror=format-security/}"
+    export CXXFLAGS="${CXXFLAGS/-Werror=format-security/}"
+
+    export MAKEFLAGS="${MAKEFLAGS:--j$(nproc)}"
+
+    local _cmake_options=(
+      -S "$pkgname"
+      -B build
+      -Wno-dev
+      -D BUILD_DOCS=OFF
+      -D BUILD_WERROR=ON
+      -D CMAKE_INSTALL_PREFIX=/usr
+      -D SUNSHINE_EXECUTABLE_PATH=/usr/bin/sunshine
+      -D SUNSHINE_ASSETS_DIR="share/sunshine"
+      -D SUNSHINE_PUBLISHER_NAME='aldokeita'
+      -D SUNSHINE_PUBLISHER_WEBSITE='https://github.com/aldokeita/Astra'
+      -D SUNSHINE_PUBLISHER_ISSUE_URL='https://github.com/aldokeita/Astra/issues'
+    )
+
+    if [[ "${_use_cuda::1}" != "t" ]]; then
+      _cmake_options+=(-DSUNSHINE_ENABLE_CUDA=OFF -DCUDA_FAIL_ON_MISSING=OFF)
+    else
+      if [ -z "${CUDA_PATH:-}" ] && pacman -Qi cuda &> /dev/null; then
+        local _cuda_gcc_version
+        _cuda_gcc_version="$(LC_ALL=C pacman -Si cuda | grep -Pom1 '^Depends On\s*:.*\bgcc\K[0-9]+\b' || true)"
+
+        export CUDA_PATH=/opt/cuda
+        if [ -n "$_cuda_gcc_version" ]; then
+          export NVCC_CCBIN="/usr/bin/g++-${_cuda_gcc_version}"
+        else
+          export NVCC_CCBIN="/usr/bin/g++"
+        fi
+      fi
+    fi
+
+    if [[ "${_run_unit_tests::1}" != "t" ]]; then
+      _cmake_options+=(-DBUILD_TESTS=OFF)
+    fi
+
+    if [[ -z "${GITHUB_ACTIONS}" ]]; then
+	    _appstreamcli_arguments=(--no-net)
+    fi
+
+    cmake "${_cmake_options[@]}"
+
+    appstreamcli validate "${_appstreamcli_arguments[@]}" "build/dev.lizardbyte.app.Sunshine.metainfo.xml"
+    appstream-util validate "build/dev.lizardbyte.app.Sunshine.metainfo.xml"
+    desktop-file-validate "build/dev.lizardbyte.app.Sunshine.desktop"
+    desktop-file-validate "build/dev.lizardbyte.app.Sunshine.terminal.desktop"
+
+    cmake --build build
+}
+
+check() {
+    if [[ "${_run_unit_tests::1}" == "t" ]]; then
+      export CC="gcc${_gcc_env_suffix}"
+      export CXX="g++${_gcc_env_suffix}"
+
+      cd "${srcdir}/build/tests"
+      GCOV_EXIT_AT_ERROR=1 ./test_sunshine --gtest_color=yes --gtest_output=xml:test_results.xml
+    fi
+
+    cd "${srcdir}/build"
+    ./sunshine --version
+}
+
+package() {
+    export MAKEFLAGS="${MAKEFLAGS:--j$(nproc)}"
+    DESTDIR="$pkgdir" cmake --install build
+}
