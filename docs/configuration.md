@@ -45,7 +45,7 @@ supported on the current platform.
     <tr>
         <td>Description</td>
         <td colspan="2">
-            The locale used for Sunshine's user interface.
+            The locale used for Astra's user interface.
         </td>
     </tr>
     <tr>
@@ -61,7 +61,7 @@ supported on the current platform.
             @endcode</td>
     </tr>
     <tr>
-        <td rowspan="20">Choices</td>
+        <td rowspan="23">Choices</td>
         <td>bg</td>
         <td>Bulgarian</td>
     </tr>
@@ -92,6 +92,14 @@ supported on the current platform.
     <tr>
         <td>fr</td>
         <td>French</td>
+    </tr>
+    <tr>
+        <td>hu</td>
+        <td>Hungarian</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>Indonesian</td>
     </tr>
     <tr>
         <td>it</td>
@@ -132,6 +140,10 @@ supported on the current platform.
     <tr>
         <td>uk</td>
         <td>Ukranian</td>
+    </tr>
+    <tr>
+        <td>vi</td>
+        <td>Vietnamese</td>
     </tr>
     <tr>
         <td>zh</td>

@@ -47,6 +47,7 @@ function removeCmd(index) {
         <option value="es">Español (Spanish)</option>
         <option value="fr">Français (French)</option>
         <option value="hu">Magyar (Hungarian)</option>
+        <option value="id">Bahasa Indonesia (Indonesian)</option>
         <option value="it">Italiano (Italian)</option>
         <option value="ja">日本語 (Japanese)</option>
         <option value="ko">한국어 (Korean)</option>
@@ -64,10 +65,10 @@ function removeCmd(index) {
       <div class="form-text">{{ $t('config.locale_desc') }}</div>
     </div>
 
-    <!-- Sunshine Name -->
+    <!-- Host name -->
     <div class="mb-3">
       <label for="sunshine_name" class="form-label">{{ $t('config.sunshine_name') }}</label>
-      <input type="text" class="form-control" id="sunshine_name" placeholder="Sunshine"
+      <input type="text" class="form-control" id="sunshine_name" placeholder="Astra"
              v-model="config.sunshine_name" />
       <div class="form-text">{{ $t('config.sunshine_name_desc') }}</div>
     </div>

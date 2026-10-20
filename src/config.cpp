@@ -1884,6 +1884,7 @@ namespace config {
                                                                    "es"sv,  // Spanish
                                                                    "fr"sv,  // French
                                                                    "hu"sv,  // Hungarian
+                                                                   "id"sv,  // Indonesian
                                                                    "it"sv,  // Italian
                                                                    "ja"sv,  // Japanese
                                                                    "ko"sv,  // Korean
