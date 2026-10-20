@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Sunshine UI - Modern Design System
+   Astra UI - Modern Design System
    ========================================================================== */
 
 /* Hide pages while localization is loading */
@@ -48,6 +48,61 @@
 /* ==========================================================================
    Dark Themes
    ========================================================================== */
+
+/* Astra Theme - Night sky, starlight, and a quiet constellation */
+[data-theme="astra"] {
+    --color-primary: #c9d6ff;
+    --color-primary-hover: #e2e9ff;
+    --color-primary-light: #151b2b;
+    --color-accent: #8fa8e8;
+    --color-accent-hover: #aabfff;
+    --color-accent-light: #141c33;
+    --color-success: #5fd3a3;
+    --color-success-hover: #7fe3ba;
+    --color-success-light: #08251b;
+    --color-danger: #ff6b81;
+    --color-danger-hover: #ff8b9c;
+    --color-danger-light: #2b0a10;
+    --color-warning: #f5c76b;
+    --color-warning-hover: #ffd98f;
+    --color-warning-light: #2b2108;
+    --color-info: #7fd4ff;
+    --color-info-hover: #a3e1ff;
+    --color-info-light: #062231;
+
+    --color-on-primary: #05070c;
+    --color-on-success: #04150f;
+    --color-on-danger: #1a0508;
+    --color-on-info: #04131a;
+    --color-on-warning: #1a1304;
+
+    --color-bg-base: #050607;
+    --color-bg-subtle: #0a0d12;
+    --color-bg-muted: #11161f;
+    --color-surface: #0e1116;
+    --color-surface-raised: #151b24;
+
+    --color-border: #232b38;
+    --color-border-strong: #39465a;
+
+    --color-text-base: #eef2ff;
+    --color-text-muted: #aab6cf;
+    --color-text-subtle: #7c89a3;
+
+    --navbar-bg: linear-gradient(135deg, #05070b 0%, #0d1322 55%, #1a2340 100%);
+    --navbar-text: #eef2ff;
+    --navbar-text-muted: rgba(238, 242, 255, 0.72);
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.55);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.65), 0 2px 4px -1px rgba(0, 0, 0, 0.55);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.65), 0 4px 6px -2px rgba(0, 0, 0, 0.55);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="astra"] body {
+    background-image: radial-gradient(circle at 50% -20%, rgba(106, 138, 214, 0.16), transparent 55%);
+    background-attachment: fixed;
+}
 
 /* Dark Theme - Simple clean dark design */
 [data-theme="dark"] {

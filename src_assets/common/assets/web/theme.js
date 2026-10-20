@@ -1,3 +1,5 @@
+const DEFAULT_THEME = 'astra'
+
 const getStoredTheme = () => localStorage.getItem('theme')
 const setStoredTheme = theme => localStorage.setItem('theme', theme)
 
@@ -7,11 +9,12 @@ export const getPreferredTheme = () => {
         return storedTheme
     }
 
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    return DEFAULT_THEME
 }
 
 // Define which themes are dark (for Bootstrap compatibility)
 const darkThemes = new Set([
+    'astra',
     'dark',
     'dracula',
     'ember',
@@ -117,8 +120,9 @@ export function loadAutoTheme() {
 
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
             const storedTheme = getStoredTheme()
-            // Only auto-switch if theme is set to 'auto'
-            if (storedTheme === 'auto' || !storedTheme) {
+            // Only auto-switch if theme is explicitly set to 'auto'.
+            // A clean browser gets Astra, not the operating system preference.
+            if (storedTheme === 'auto') {
                 setTheme(getPreferredTheme())
             }
         })
