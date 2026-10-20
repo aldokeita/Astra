@@ -1,6 +1,6 @@
 <div align="center">
   <img
-    src="sunshine.svg"
+    src="sunshine.png"
     alt="Astra icon"
     width="256"
   />
@@ -45,7 +45,7 @@ the fork is available at [packaging/linux/Arch/PKGBUILD.astra](packaging/linux/A
 
 ## 🎨 Branding
 
-- Black night sky, white constellation lines, and starlight accents.
+- Black night sky, a glowing white spiral galaxy, and starlight accents.
 - The `Astra` theme is the default in a clean browser. All upstream UI themes remain selectable.
 - Interface languages: English (default) and Bahasa Indonesia.
 

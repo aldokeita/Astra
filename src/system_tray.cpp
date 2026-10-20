@@ -9,22 +9,22 @@
    * @def TRAY_ICON
    * @brief Path to the default system tray icon.
    */
-  #define TRAY_ICON WEB_DIR "images/logo-sunshine.svg"
+  #define TRAY_ICON WEB_DIR "images/logo-sunshine.png"
   /**
    * @def TRAY_ICON_PLAYING
    * @brief Path to the system tray icon used while streaming.
    */
-  #define TRAY_ICON_PLAYING WEB_DIR "images/sunshine-playing.svg"
+  #define TRAY_ICON_PLAYING WEB_DIR "images/sunshine-playing.png"
   /**
    * @def TRAY_ICON_PAUSING
    * @brief Path to the system tray icon used while streaming is paused.
    */
-  #define TRAY_ICON_PAUSING WEB_DIR "images/sunshine-pausing.svg"
+  #define TRAY_ICON_PAUSING WEB_DIR "images/sunshine-pausing.png"
   /**
    * @def TRAY_ICON_LOCKED
    * @brief Path to the system tray icon used for pairing requests.
    */
-  #define TRAY_ICON_LOCKED WEB_DIR "images/sunshine-locked.svg"
+  #define TRAY_ICON_LOCKED WEB_DIR "images/sunshine-locked.png"
   /**
    * @def TRAY_ICON_VIRTUALHID
    * @brief Path to the Virtual HID Driver notification icon.

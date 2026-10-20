@@ -36,8 +36,8 @@ identitas dan tampilan diganti, mesin streaming upstream dipertahankan apa adany
 
 ## Identitas visual
 
-- **Hitam** sebagai warna dasar, **galaksi konstelasi putih** sebagai aksen.
-- Konsep ikon: rasi bintang putih yang membentuk huruf "A" di atas hitam.
+- **Hitam** sebagai warna dasar, **galaksi putih bersinar** sebagai aksen.
+- Konsep ikon: galaxy spiral putih yang bersinar di atas hitam.
 - Kontras identitas: SoLunar = gerhana + merah; Astra = langit malam + bintang putih.
 - Draft awal (palet tema CSS + SVG ikon) disiapkan terpisah dan diterapkan pada Fase 2;
   variabel tema mengikuti struktur `[data-theme]` di `sunshine.css` upstream
@@ -82,7 +82,10 @@ Perkiraan patch inti: ±15–25 file, hampir semua teks/aset.
     atas tag). Strategi patch-per-rilis resmi dipakai.
 - **Fase 2 — Patch rebrand web UI & aset: SELESAI (2026-10-20)**
   1. ✅ Tema `astra` (blok `[data-theme="astra"]` + entri registry `theme.js`) dan
-     ikon konstelasi "A" (putih di atas hitam) untuk semua aset logo/status/tray.
+     ikon galaxy spiral putih bersinar untuk semua aset logo/status/tray.
+     Ikon brand memakai set milik pemilik dari
+     `/home/hydekeita/Documents/SoLunar/Astra Icon/Astra Icon.png`; tray/status
+     memakai PNG (bukan SVG) agar detail galaxy tetap utuh.
      Tema `astra` kini default di browser bersih; pilihan `auto` tetap ada.
   2. ✅ Judul tab + `theme-color` + favicon (`template_header.html`), logo
      `Navbar.vue`/`NavbarSimple.vue`, username default `welcome.html` → `astra`.
@@ -96,10 +99,15 @@ Perkiraan patch inti: ±15–25 file, hampir semua teks/aset.
      `PROJECT_NAME`, `PROJECT_FQDN`, nama binary/paket/unit service/udev tetap.
      Ditambah variabel `PROJECT_DISPLAY_NAME="Astra"` untuk Name pada
      .desktop dan metainfo.
-  5. ✅ Ikon app bawaan (`desktop.png`, `steam.png`) bergaya Astra. **Nama app
-     dipertahankan persis** ("Desktop", "Low Res Desktop", "Steam Big Picture")
-     karena SoLunar mencocokkan "Desktop" persis dan mengenali "Steam"; ganti
-     nama akan mematikan tombol "Hubungkan ke Desktop" di SoLunar.
+  5. ✅ Ikon app bawaan memakai set milik pemilik: `Desktop Icon.png` dan
+     `Steam Icon.png` dari folder `Astra Icon`. Gaya hitam-putih menyala ini
+     sengaja berbeda dari ikon berwarna Sunshine. Ikon `Epic Icon.png`,
+     `Game Icon.png`, dan `Playnite Icon.png` sudah disalin ke
+     `src_assets/common/assets/` untuk app tambahan di masa depan, tetapi belum
+     didaftarkan sebagai app bawaan. **Nama app dipertahankan persis**
+     ("Desktop", "Low Res Desktop", "Steam Big Picture") karena SoLunar
+     mencocokkan "Desktop" persis dan mengenali "Steam"; ganti nama akan
+     mematikan tombol "Hubungkan ke Desktop" di SoLunar.
   6. ✅ Ikon root (`sunshine.svg/png/ico`), ikon status playing/pausing/locked,
      README Astra yang bersih, dan URL update-check web UI diarahkan ke
      `aldokeita/Astra`.
