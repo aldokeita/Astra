@@ -77,21 +77,38 @@ Perkiraan patch inti: ±15–25 file, hampir semua teks/aset.
 - **Fase 1 — Fondasi repo: SELESAI (2026-10-20)**
   - Fork `aldokeita/Astra` terbuat dengan semua branch + tag upstream. ✅
   - Branch `astra` terbuat. ✅
-  - ⚠️ **Catatan terbuka:** branch `astra` saat ini berbasis `master` upstream
-    (HEAD `8aac196`), BUKAN tag `v2026.914.233613` seperti strategi awal —
-    pemilih branch web GitHub tidak menawarkan tag dan API pembuatan branch
-    sedang tidak stabil. Keputusan sebelum Fase 2 dimulai: rebase branch ke
-    tag `v2026.914.233613`, atau lanjut dari master. Belum diputuskan.
-  - Belum ada commit rebrand apa pun di branch `astra`.
-- **Fase 2 — Patch rebrand web UI & aset: BELUM MULAI**
-  Urutan kerja yang direncanakan:
-  1. Tema `astra` (CSS + registry + jadikan default) dan ikon konstelasi.
-  2. Judul/favicon `index.html`, logo `Navbar.vue`, username default `Welcome.vue`.
-  3. String dwibahasa: patch `en.json`, lengkapi locale Indonesia untuk string yang diubah.
-  4. Deskripsi `CMakeLists.txt` (deskripsi saja; `PROJECT_NAME` tidak diganti).
-  5. `apps.json` bawaan: nama + ikon ala SoLunar.
-  6. Ikon root repo + banner; README Astra.
-  7. PKGBUILD Arch untuk fork.
+  - ✅ **Keputusan basis branch (2026-10-20):** branch `astra` sudah di-rebase ke
+    tag rilis `v2026.914.233613` (HEAD `c6da588a`, commit HANDOFF dipindahkan ke
+    atas tag). Strategi patch-per-rilis resmi dipakai.
+- **Fase 2 — Patch rebrand web UI & aset: SELESAI (2026-10-20)**
+  1. ✅ Tema `astra` (blok `[data-theme="astra"]` + entri registry `theme.js`) dan
+     ikon konstelasi "A" (putih di atas hitam) untuk semua aset logo/status/tray.
+     Tema `astra` kini default di browser bersih; pilihan `auto` tetap ada.
+  2. ✅ Judul tab + `theme-color` + favicon (`template_header.html`), logo
+     `Navbar.vue`/`NavbarSimple.vue`, username default `welcome.html` → `astra`.
+  3. ✅ String `en.json` (70 nilai) di-rebrand ke Astra, ditambah kunci
+     `navbar.theme_astra`. File `id.json` baru: 328 kunci mencakup seluruh UI
+     utama (navbar, index, welcome, password, pin, apps, config penting, dsb);
+     kunci teknis yang belum diterjemahkan jatuh ke fallback Inggris.
+     `locale=id` didaftarkan di `config.cpp`, `General.vue`, dan
+     `docs/configuration.md`.
+  4. ✅ Deskripsi `CMakeLists.txt` (DESCRIPTION/BRIEF/LONG, homepage fork).
+     `PROJECT_NAME`, `PROJECT_FQDN`, nama binary/paket/unit service/udev tetap.
+     Ditambah variabel `PROJECT_DISPLAY_NAME="Astra"` untuk Name pada
+     .desktop dan metainfo.
+  5. ✅ Ikon app bawaan (`desktop.png`, `steam.png`) bergaya Astra. **Nama app
+     dipertahankan persis** ("Desktop", "Low Res Desktop", "Steam Big Picture")
+     karena SoLunar mencocokkan "Desktop" persis dan mengenali "Steam"; ganti
+     nama akan mematikan tombol "Hubungkan ke Desktop" di SoLunar.
+  6. ✅ Ikon root (`sunshine.svg/png/ico`), ikon status playing/pausing/locked,
+     README Astra yang bersih, dan URL update-check web UI diarahkan ke
+     `aldokeita/Astra`.
+  7. ✅ `packaging/linux/Arch/PKGBUILD.astra` (pkgname tetap `sunshine`,
+     source branch `astra`, publisher aldokeita).
+  - Validasi: build web UI (`npm ci && npm run build`) lolos; konsistensi
+    locale (config.cpp ↔ General.vue ↔ file JSON) dicek ulang dan cocok.
+  - ⚠️ **Catatan locale:** `id.json` belum 100% (353 kunci teknis masih
+    Inggris lewat fallback). Lanjutkan saat menyentuh tab konfigurasi terkait.
 - **Fase 3 — Build & tes di CachyOS pemilik: BELUM MULAI** (kriteria di bawah)
 
 ## Kriteria tes (disetujui pemilik 2026-10-20)
